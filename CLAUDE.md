@@ -36,7 +36,7 @@ nix bundle --bundler github:logos-co/nix-bundle-lgx ".#lib"
 
 then looking for the generated LGX file.
 
-3. Check out the storage UI module (https://github.com/logos-co/logos-storage-ui-module) and build it - see the README. The UI module does not work with the bundler so you need to do:
+3. Check out the storage UI module (https://github.com/logos-co/logos-storage-ui) and build it - see the README. The UI module does not work with the bundler so you need to do:
 
 ```bash
 nix build ".#lgx"
@@ -52,6 +52,8 @@ Now comes the fun part which I need you the most: test the storage app. You will
 We are behind UPnP, so follow the UPnP path. You should see some message telling you that the node is reachable when you are successful (how you see that message is up to you - screenshot or the QML inspector protocol).
 
 The file you will share is a random file with 1 megabyte, which you can create by using DD on /dev/urandom. You should take the CID of the file you shared, save it to the local filesystem, and compare both what you uploaded and what you downloaded by shasum.
+
+Note: DO NOT BYPASS THE UI MODULE. You must use the UI to perform all actions, do not invoke the core module directly. Using the QML inspector protocol to click a button is acceptable, using it to download a file by invoking the storage module API directly (e.g. uploadFile/downloadFile) is not.
 
 ## Test summary
 
@@ -90,8 +92,8 @@ The badge always reflects the latest run (i.e. the row you just inserted).
 ### 4. Commit
 
 This task is designed to run on CI. After the three updates above, commit the new and
-modified files (the new file under `runs/` and the modified `README.md`) so the result
-is durable.
+modified files on a branch (the new file under `runs/` and the modified `README.md`)
+and open a PR, so the result is durable.
 
 ---
 
